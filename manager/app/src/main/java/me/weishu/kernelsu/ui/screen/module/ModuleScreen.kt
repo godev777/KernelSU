@@ -157,12 +157,11 @@ fun ModulePager(
             viewModel.toggleSortEnabledFirst()
         },
         onOpenWebUi = { module ->
-            webUILauncher.launch(
-                Intent(context, WebUIActivity::class.java)
-                    .setData(
-                        Shortcut.buildShortcutUri(module.id, ShortcutType.WebUI)
-                    )
-            )
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                setPackage(context.packageName)
+                data = Shortcut.buildShortcutUri(module.id, ShortcutType.WebUI)
+            }
+            context.startActivity(intent)
         },
         onToggleModule = { module ->
             viewModel.toggleModule(module)
